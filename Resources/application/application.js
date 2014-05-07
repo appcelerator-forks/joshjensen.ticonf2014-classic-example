@@ -1,3 +1,5 @@
+var social = require("dk.napp.social");
+
 var uiHelper = require("application/helpers/ui");
 
 var APP = {};
