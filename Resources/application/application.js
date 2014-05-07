@@ -1,19 +1,14 @@
+var uiHelper = require("application/helpers/ui");
+
 var APP = {};
 
 APP.init = function() {
-	var win = Ti.UI.createWindow({
+	var win = uiHelper.windowFactory({
 		backgroundColor: "#fff"
 	});
 
-	var label = Ti.UI.createLabel({
-		color: "#333",
-		text: "Hello TiConf",
-		font: {
-			fontSize:20,
-			fontFamily: "Helvetica Neue"
-		},
-		textAlign: "center",
-		width: "auto"
+	var label = uiHelper.labelFactory({
+		text: "Hello TiConf"
 	});
 	win.add(label);
 
