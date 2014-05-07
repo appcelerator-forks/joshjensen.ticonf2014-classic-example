@@ -5,21 +5,21 @@ var uiHelper = require("application/helpers/ui");
 var APP = {};
 
 APP.init = function() {
-	var win = uiHelper.windowFactory({
-		backgroundColor: "#fff"
-	}, {
-		onClose: function() {
-			win = null;
-			label = null;
-		}
-	});
+    var win = uiHelper.windowFactory({
+        backgroundColor: "#fff"
+    }, {
+        onClose: function() {
+            win = null;
+            label = null;
+        }
+    });
 
-	var label = uiHelper.labelFactory({
-		text: "Hello TiConf"
-	});
-	win.add(label);
+    var label = uiHelper.labelFactory({
+        text: "Hello TiConf"
+    });
+    win.add(label);
 
-	win.open();
+    win.open();
 };
 
 module.exports = APP;
