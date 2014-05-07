@@ -4,7 +4,7 @@ exports.windowFactory = function(_params) {
 	var win = Ti.UI.createWindow(_.extend(_params, {}));
 
 	var onWindowClose = function() {
-		console.log("Window Closed");
+		Ti.API.info("Window Closed");
 		win = null;
 		onWindowClose = null;
 	};
