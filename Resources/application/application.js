@@ -7,6 +7,11 @@ var APP = {};
 APP.init = function() {
 	var win = uiHelper.windowFactory({
 		backgroundColor: "#fff"
+	}, {
+		onClose: function() {
+			win = null;
+			label = null;
+		}
 	});
 
 	var label = uiHelper.labelFactory({
