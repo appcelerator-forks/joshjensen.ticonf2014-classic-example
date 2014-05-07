@@ -2,6 +2,14 @@ var _ = require("application/vendor/underscore");
 
 exports.windowFactory = function(_params) {
 	var win = Ti.UI.createWindow(_.extend(_params, {}));
+
+	var onWindowClose = function() {
+		console.log("Window Closed");
+		win = null;
+		onWindowClose = null;
+	};
+
+	win.addEventListener("close", onWindowClose);
 	return win;
 };
 
