@@ -1,10 +1,10 @@
 var _ = require("application/vendor/underscore");
 var uiHelper = require("application/helpers/ui");
-
-var currentRating = null;
+var utilities = require("application/helpers/utilities");
+var ratings = require("application/helpers/ratings");
 
 var setRating = function(id) {
-    currentRating = parseInt(id.replace("star", ""), 10) + 1;
+    ratings.currentRating = parseInt(id.replace("star", ""), 10) + 1;
 };
 
 exports.open = function() {
@@ -15,8 +15,11 @@ exports.open = function() {
         onClose: function() {
             starWrapper.removeEventListener("click", onStarTap);
             button.removeEventListener('click', onButtonTap);
+            Ti.Gesture.removeEventListener("orientationchange", onOrientationChange);
 
             win = null;
+            orientationLabel = null;
+            onOrientationChange = null;
             label = null;
             button = null;
             onButtonTap = null;
@@ -26,8 +29,20 @@ exports.open = function() {
         }
     });
 
-    var label = uiHelper.labelFactory({
+    var orientationLabel = uiHelper.labelFactory({
         top: "45%",
+        text: "Orientation: " + utilities.getOrientation()
+   });
+    win.add(orientationLabel);
+
+    var onOrientationChange = function() {
+        orientationLabel.setText("Orientation: " + utilities.getOrientation());
+    };
+
+    Ti.Gesture.addEventListener("orientationchange", onOrientationChange);
+
+    var label = uiHelper.labelFactory({
+        top: "10dp",
         text: "Rate my app"
     });
     win.add(label);
@@ -41,14 +56,14 @@ exports.open = function() {
 
     win.add(starWrapper);
 
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 5; i++) {
         starWrapper.add(Ti.UI.createImageView({
             id: "star" + i,
             height: "24dp",
             width: "24dp",
             left: "5dp",
             image: "/images/star.png",
-            opacity: 0.5
+            opacity: (ratings.currentRating - 1 === i) ? 1 : 0.5
         }));
     }
 
@@ -58,7 +73,7 @@ exports.open = function() {
         });
         e.source.setOpacity(1);
         setRating(e.source.id);
-        Ti.API.info(currentRating);
+        Ti.API.info(ratings.currentRating);
     };
 
     starWrapper.addEventListener("click", onStarTap);

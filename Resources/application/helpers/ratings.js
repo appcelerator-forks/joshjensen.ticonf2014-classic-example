@@ -1,0 +1,1 @@
+exports.currentRating = 0;

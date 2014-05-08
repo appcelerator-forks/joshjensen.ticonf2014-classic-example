@@ -1,6 +1,7 @@
 var social = require("dk.napp.social");
 
 var uiHelper = require("application/helpers/ui");
+var ratings = require("application/helpers/ratings");
 
 var APP = {};
 
@@ -10,9 +11,12 @@ APP.init = function() {
         layout: "vertical"
     }, {
         onClose: function() {
+            win.removeEventListener("focus", onWindowFocus);
+
             win = null;
             label = null;
             button = null;
+            onWindowFocus = null;
         }
     });
 
@@ -34,6 +38,12 @@ APP.init = function() {
     });
 
     win.add(button);
+
+    var onWindowFocus = function() {
+        label.setText("Hello TiConf \n\nCurrent Rating: " + ratings.currentRating + " stars");
+    };
+
+    win.addEventListener("focus", onWindowFocus);
 
     win.open();
 };
